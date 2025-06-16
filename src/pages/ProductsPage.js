@@ -19,7 +19,7 @@ const ProductsPage = () => {
       university: "ЮФУ",
       discipline: "Информатика",
       access: "Бесплатно",
-      link: "/book1",
+      file: "test.txt",
       year: "2024"
     },
     {
@@ -29,7 +29,7 @@ const ProductsPage = () => {
       university: "ДГТУ",
       discipline: "Математика",
       access: "Бесплатно",
-      link: "/book2",
+      file: "test.txt",
       year: "2023"
     },
     {
@@ -39,7 +39,7 @@ const ProductsPage = () => {
       university: "РГЭУ (РИНХ)",
       discipline: "История",
       access: "Платно",
-      link: "/book3",
+      file: "test.txt",
       year: "2025"
     },
     {
@@ -49,7 +49,7 @@ const ProductsPage = () => {
       university: "ЮФУ",
       discipline: "Экономика",
       access: "Бесплатно",
-      link: "/book4",
+      file: "test.txt",
       year: "2024"
     },
     {
@@ -59,7 +59,7 @@ const ProductsPage = () => {
       university: "ЮФУ",
       discipline: "Физика",
       access: "Платно",
-      link: "/book5",
+      file: "test.txt",
       year: "2023"
     },
     {
@@ -69,23 +69,35 @@ const ProductsPage = () => {
       university: "РостГМУ",
       discipline: "Биология",
       access: "Бесплатно",
-      link: "/book6",
+      file: "test.txt",
       year: "2024"
     }
   ];
 
   // Фильтрация коллекций
-const filteredCollections = collectionsData.filter(item => {
-  return (
-    (searchTerm === '' || 
-      item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.discipline.toLowerCase().includes(searchTerm.toLowerCase())) &&
-    (filterUniversity === '' || item.university === filterUniversity) &&
-    (filterDiscipline === '' || item.discipline === filterDiscipline) &&
-    (filterAccess === '' || item.access === filterAccess)
-  );
-});
+  const filteredCollections = collectionsData.filter(item => {
+    return (
+      (searchTerm === '' || 
+        item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.discipline.toLowerCase().includes(searchTerm.toLowerCase())) &&
+      (filterUniversity === '' || item.university === filterUniversity) &&
+      (filterDiscipline === '' || item.discipline === filterDiscipline) &&
+      (filterAccess === '' || item.access === filterAccess)
+    );
+  });
+
+  // Обработчик скачивания файла
+  const handleDownload = (fileName) => {
+    // Создаем временную ссылку для скачивания
+    const downloadLink = document.createElement('a');
+    downloadLink.href = `/downloads/${fileName}`;
+    downloadLink.download = fileName;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  };
+
   // Сервисы
   const services = [
     {
@@ -256,7 +268,7 @@ const filteredCollections = collectionsData.filter(item => {
                     <th>{language === 'ru' ? "ВУЗ" : "University"}</th>
                     <th>{language === 'ru' ? "Год" : "Year"}</th>
                     <th>{language === 'ru' ? "Доступность" : "Access"}</th>
-                    <th>{language === 'ru' ? "Ссылка" : "Link"}</th>
+                    <th>{language === 'ru' ? "Скачать" : "Download"}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -272,9 +284,12 @@ const filteredCollections = collectionsData.filter(item => {
                           {item.access}
                         </td>
                         <td>
-                          <a href={item.link} className="resource-link">
-                            {language === 'ru' ? "Перейти" : "Open"}
-                          </a>
+                          <button 
+                            className="download-btn"
+                            onClick={() => handleDownload(item.file)}
+                          >
+                            {language === 'ru' ? "Скачать файл" : "Download File"}
+                          </button>
                         </td>
                       </tr>
                     ))
@@ -319,6 +334,13 @@ const filteredCollections = collectionsData.filter(item => {
                   <a href={service.link} className="service-link">
                     {language === 'ru' ? "Подробнее" : "Learn more"} →
                   </a>
+                  <button 
+                    className="download-btn"
+                    onClick={() => handleDownload("service-info.txt")}
+                    style={{ marginTop: '10px' }}
+                  >
+                    {language === 'ru' ? "Скачать описание" : "Download Description"}
+                  </button>
                 </div>
               ))}
             </div>
@@ -370,6 +392,13 @@ const filteredCollections = collectionsData.filter(item => {
                   <a href={tool.link} className="tool-link">
                     {language === 'ru' ? "Использовать" : "Use now"} →
                   </a>
+                  <button 
+                    className="download-btn"
+                    onClick={() => handleDownload("tool-instructions.txt")}
+                    style={{ marginTop: '10px' }}
+                  >
+                    {language === 'ru' ? "Скачать инструкцию" : "Download Instructions"}
+                  </button>
                 </div>
               ))}
             </div>
@@ -390,6 +419,12 @@ const filteredCollections = collectionsData.filter(item => {
                   <div className="storage-label">35% {language === 'ru' ? "использовано" : "used"}</div>
                 </div>
                 <p>5.2 GB {language === 'ru' ? "из 15 GB" : "of 15 GB"} {language === 'ru' ? "использовано" : "used"}</p>
+                <button 
+                  className="download-btn"
+                  onClick={() => handleDownload("storage-guide.pdf")}
+                >
+                  {language === 'ru' ? "Скачать руководство" : "Download Guide"}
+                </button>
               </div>
             </div>
           </div>

@@ -13,7 +13,8 @@ const NewArrivalsPage = () => {
         : "Modern Algorithms and Data Structures",
       author: "Иванов А.П.",
       year: "2025",
-      image: "/book-algorithms.jpg"
+      image: "/book-algorithms.jpg",
+      file: "modern-algorithms.pdf" // Добавлено поле с именем файла
     },
     {
       id: 2,
@@ -22,7 +23,8 @@ const NewArrivalsPage = () => {
         : "Artificial Intelligence in Education",
       author: "Петрова С.В.",
       year: "2024",
-      image: "/book-ai.jpg"
+      image: "/book-ai.jpg",
+      file: "ai-in-education.pdf"
     },
     {
       id: 3,
@@ -31,7 +33,8 @@ const NewArrivalsPage = () => {
         : "Digital Transformation of Universities",
       author: "Сидоров Д.И.",
       year: "2024",
-      image: "/book-digital.jpg"
+      image: "/book-digital.jpg",
+      file: "digital-transformation.pdf"
     },
     {
       id: 4,
@@ -40,9 +43,21 @@ const NewArrivalsPage = () => {
         : "Fundamentals of Cloud Computing",
       author: "Кузнецова М.А.",
       year: "2025",
-      image: "/book-cloud.jpg"
+      image: "/book-cloud.jpg",
+      file: "cloud-computing-fundamentals.pdf"
     }
   ];
+
+  // Обработчик скачивания файла
+  const handleDownload = (fileName) => {
+    // Создаем временную ссылку для скачивания
+    const downloadLink = document.createElement('a');
+    downloadLink.href = `/downloads/${fileName}`;
+    downloadLink.download = fileName;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  };
 
   return (
     <div className="page-content">
@@ -69,7 +84,10 @@ const NewArrivalsPage = () => {
             <div className="material-info">
               <h3>{material.title}</h3>
               <p>{material.author} ({material.year})</p>
-              <button className="download-btn">
+              <button 
+                className="download-btn"
+                onClick={() => handleDownload(material.file)}
+              >
                 {language === 'ru' ? "Скачать PDF" : "Download PDF"}
               </button>
             </div>
