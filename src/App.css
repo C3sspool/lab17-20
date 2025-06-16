@@ -1291,3 +1291,36 @@ html, body, #root {
   background: #e3f2fd;
   color: #0d47a1;
 }
+/* Стили для кнопок скачивания */
+.download-btn {
+  padding: 8px 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.download-btn:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+}
+
+.download-btn:active {
+  transform: translateY(1px);
+}
+
+/* Для таблицы */
+.collections-table .download-btn {
+  padding: 6px 12px;
+  font-size: 13px;
+}
+
+/* Для карточек сервисов и инструментов */
+.service-card .download-btn, 
+.tool-card .download-btn {
+  width: 100%;
+  margin-top: 10px;
+}
